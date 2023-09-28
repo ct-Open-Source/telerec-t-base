@@ -1,0 +1,63 @@
+- name: Create traefik directory if needed
+  file:
+    path: '{{ docker_dir }}/traefik'
+    state: directory
+    owner: '{{ user.name }}'
+    group: 'docker'
+    mode: 0775
+  when: service_traefik == 'present'
+
+- name: Copy dynamic.yml
+  become: 'no'
+  synchronize:
+    src: dynamic.yml
+    dest: '{{ docker_dir }}/traefik/dynamic.yml'
+    mode: push
+  when: service_traefik != "absent"
+
+- name: Copy static.yml
+  become: 'no'
+  synchronize:
+    src: static.yml
+    dest: '{{ docker_dir }}/traefik/static.yml'
+    mode: push
+  when: service_traefik != "absent"
+
+- name: ensure acme.json exists
+  copy:
+    content: ""
+    dest: '{{ docker_dir }}/traefik/acme.json'
+    force: no
+    group: docker
+    owner: pina
+    mode: 0600
+  when: service_traefik != "absent"
+
+- name: "start Traefik"
+  docker_compose:
+    state: "{{ service_traefik }}"
+    recreate: always
+    stopped: "{{ service_traefik == 'stopped' }}"
+    project_name: traefik
+    definition:
+      version: '3.7'
+      services:
+        traefik:
+          image: "{{ traefik.image }}"
+          container_name: traefik
+          restart: always
+          ports:
+            - "80:80"
+            - "443:443"
+          volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:rw
+            - '{{ docker_dir }}/traefik/static.yml:/etc/traefik/traefik.yml:ro'
+            - '{{ docker_dir }}/traefik/dynamic.yml:/etc/traefik/dynamic/dynamic.yml:ro'
+            - '{{ docker_dir }}/traefik/acme.json:/etc/traefik/acme/acme.json:rw'
+          networks:
+            - traefik_net
+      networks:
+        traefik_net:
+          external:
+            name: traefik_default
+  register: traefik_docker

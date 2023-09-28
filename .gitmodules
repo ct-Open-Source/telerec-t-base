@@ -1,0 +1,6 @@
+[submodule "group_vars/secrets"]
+	path = group_vars/secrets
+	url = git@github.com:pinae/telerec-t-secrets.git
+[submodule "roles/bonsai-sim"]
+	path = roles/bonsai-sim
+	url = git@github.com:ct-Open-Source/telerec-t-bonsai-sim.git

@@ -1,0 +1,4 @@
+user:
+  key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+docker_dir: "/docker"
+main_domain: "example.com"

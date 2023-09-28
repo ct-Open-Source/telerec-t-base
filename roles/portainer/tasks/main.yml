@@ -1,0 +1,93 @@
+- name: Create portainer directory if needed
+  file:
+    path: '{{ docker_dir }}/portainer'
+    state: directory
+    owner: '{{ user.name }}'
+    group: 'docker'
+    mode: 0775
+  when: service_portainer == 'started'
+
+#- name: "Ensure portainer stack is {{ services.portainer }}"
+#  docker_compose:
+#    state: present
+#    stopped: "{{ services.portainer == 'stopped' }}"
+#    project_name: portainer
+#    definition:
+#      version: '3.7'
+#      services:
+#        portainer:
+#          image: "{{ portainer.image }}"
+#          container_name: "portainer"
+#          volumes:
+#            - "{{ docker_dir }}/portainer:/data:rw"
+#            - "/var/run/docker.sock:/var/run/docker.sock"
+#          restart: unless-stopped
+#          ports:
+#            - "8000:8000"
+#            - "9443:9443"
+#            - "9000:9000"
+#          labels:
+#            - "traefik.enable=true"
+#            - "traefik.docker.network=proxy"
+##            - "traefik.http.services.portainer.loadbalancer.server.port=9091"
+#            - "traefik.http.routers.portainer.EntryPoints=web"
+#            - "traefik.http.routers.portainer.rule=(Host(`portainer.{{ main_domain }}`)"
+#            - "traefik.http.routers.portainer.tls=true"
+#  register: portainer_stack
+#  when: service_portainer != "absent"
+- name: "Ensure portainer stack is {{ service_portainer }}"
+  docker_compose:
+    state: present
+    recreate: always
+    stopped: "{{ service_portainer == 'stopped' }}"
+    project_name: portainer
+    definition:
+      version: '3.7'
+      services:
+        portainer:
+          image: "{{ portainer.image }}"
+          volumes:
+            - "{{ docker_dir }}/portainer:/data:rw"
+            - "/var/run/docker.sock:/var/run/docker.sock"
+          restart: unless-stopped
+          labels:
+            - "traefik.enable=true"
+            - "traefik.docker.network=traefik_default"
+            - "traefik.http.routers.portainer.EntryPoints=web-secure"
+            - traefik.http.routers.portainer.rule=Host(`portainer.{{ main_domain }}`) || ( Host(`{{ main_domain }}`) && PathPrefix(`/portainer`) )
+            - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+            - "traefik.http.routers.portainer.service=portainer"
+            - "traefik.http.routers.portainer.tls=true"
+            - "traefik.http.routers.portainer.tls.certresolver=default"
+
+          networks:
+            - traefik_net
+      networks:
+        traefik_net:
+          external:
+            name: traefik_default
+  register: portainer_stack
+  when: service_portainer != "absent"
+
+#- name: Configure admin user password
+#  uri:
+#    url: "http://{{ portainer_stack.services.portainer.portainer.networks.portainer_default.IPAddress }}:9000/api/users/admin/init"
+#    method: POST
+#    return_content: true
+#    body_format: json
+#    body: '{ "Username":"{{ portainer.admin_user }}", "Password":"{{ portainer.admin_password }}"}'
+#    status_code: 200, 409
+#  when: service_portainer == "started"
+
+
+# I took this from https://github.com/shelleg/ansible-role-portainer/blob/master/tasks/main.yml
+# not needed ATM, but can be used to further configure the settings
+# see: https://github.com/shelleg/ansible-role-portainer/blob/master/tasks/settings.yml
+#- name: Generate authentication token
+#  uri:
+#    url: "{{ portainer_endpoint }}/auth"
+#    method: POST
+#    return_content: true
+#    body_format: json
+#    body: '{"Username": "{{ portainer.admin_user }}", "Password": "{{ portainer.admin_password }}"}'
+#  register: auth_token

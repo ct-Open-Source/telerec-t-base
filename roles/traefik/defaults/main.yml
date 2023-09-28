@@ -1,0 +1,2 @@
+traefik:
+  image: "traefik:v2.6"

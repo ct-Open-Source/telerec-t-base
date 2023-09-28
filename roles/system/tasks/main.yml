@@ -1,0 +1,28 @@
+- name: Add SSH public key
+  authorized_key:
+    user: "{{ user.name }}"
+    key: "{{ user.key }}"
+
+- name: Edit sudoers file for passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^{{ user.name }} ALL=\\(ALL\\) NOPASSWD: ALL"
+    line: "{{ user.name }} ALL=(ALL) NOPASSWD: ALL"
+    validate: "visudo -cf %s"
+
+- name: Install apt packages
+  apt:
+    update_cache: yes
+    name: "{{ basic_packages }}"
+    state: present
+
+- name: All packages installed.
+  debug:
+    msg: Packages have been successfully installed
+
+- name: adding existing user '{{ user }}' to sudo group
+  user:
+    name: '{{ user.name }}'
+    groups: sudo
+    append: yes
