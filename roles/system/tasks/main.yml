@@ -1,15 +1,14 @@
-- name: Add SSH public key
-  authorized_key:
-    user: "{{ user.name }}"
-    key: "{{ user.key }}"
-
-- name: Edit sudoers file for passwordless sudo
+- name: Enable passwordless sudo for admin user {{ user.name }}
+  become: true
   lineinfile:
     dest: /etc/sudoers
     state: present
-    regexp: "^{{ user.name }} ALL=\\(ALL\\) NOPASSWD: ALL"
+    regexp: "^{{ user.name }}"
     line: "{{ user.name }} ALL=(ALL) NOPASSWD: ALL"
     validate: "visudo -cf %s"
+
+- name: import ssh tasks
+  import_tasks: ssh.yml
 
 - name: Install apt packages
   apt:

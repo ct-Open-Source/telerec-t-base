@@ -1,0 +1,37 @@
+- name: Add SSH public key
+  authorized_key:
+    user: "{{ user.name }}"
+    key: "{{ user.key }}"
+
+- name: Disable root SSH login
+  become: true
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+    state: present
+    validate: /usr/sbin/sshd -T -f %s
+  notify:
+    - restart sshd
+
+- name: Only allow SSH key authentication
+  become: true
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regex: '^AuthenticationMethods'
+    line: 'AuthenticationMethods publickey'
+    state: present
+    validate: /usr/sbin/sshd -T -f %s
+  notify:
+    - restart sshd
+
+- name: Disable SSH password authentication
+  become: true
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+    state: present
+    validate: /usr/sbin/sshd -T -f %s
+  notify:
+    - restart sshd

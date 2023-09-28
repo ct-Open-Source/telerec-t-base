@@ -1,4 +1,5 @@
 user:
   key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+locale: de_DE.UTF-8
+timezone: Europe/Berlin
 docker_dir: "/docker"
-main_domain: "example.com"
