@@ -1,2 +1,5 @@
 # IntelliJ IDEs project files
 .idea/
+
+# Pipenv
+Pipfile.lock
