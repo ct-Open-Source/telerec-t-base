@@ -1,19 +1,24 @@
 [submodule "roles/system"]
 	path = roles/system
-	url = git@github.com:ct-Open-Source/telerec-t-debian.git
-[submodule "roles/traefik"]
-	path = roles/traefik
-	url = git@github.com:ct-Open-Source/telerec-t-traefik.git
-[submodule "roles/portainer"]
-	path = roles/portainer
-	url = git@github.com:ct-Open-Source/telerect-t-portainer.git
-[submodule "roles/watchtower"]
-	path = roles/watchtower
-	url = git@github.com:ct-Open-Source/telerec-t-watchtower.git
+	url = https://github.com/ct-Open-Source/telerec-t-debian.git
+	branch = main
 [submodule "roles/compose_hull"]
 	path = roles/compose_hull
-	url = git@github.com:ct-Open-Source/telerec-t-compose-hull.git
+	url = https://github.com/ct-Open-Source/telerec-t-compose-hull.git
 	branch = main
+[submodule "roles/traefik"]
+	path = roles/traefik
+	url = https://github.com/ct-Open-Source/telerec-t-traefik.git
+	branch = main
+[submodule "roles/portainer"]
+	path = roles/portainer
+	url = https://github.com/ct-Open-Source/telerect-t-portainer.git
+	branch = main
+[submodule "roles/watchtower"]
+	path = roles/watchtower
+	url = https://github.com/ct-Open-Source/telerec-t-watchtower.git
+    branch = main
 [submodule "roles/autoheal"]
 	path = roles/autoheal
-	url = git@github.com:ct-Open-Source/telerec-t-autoheal.git
+	url = https://github.com/ct-Open-Source/telerec-t-autoheal.git
+	branch = main
