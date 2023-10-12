@@ -1,5 +1,27 @@
-user:
-  key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
-locale: de_DE.UTF-8
-timezone: Europe/Berlin
-docker_dir: "/docker"
+all_service_defaults:
+  owner: "{{ admin.name }}"
+
+traefik:
+  name: traefik
+  directory: "{{ docker_dir }}/traefik"
+  domain: "traefik.pinyto.de"
+
+portainer:
+  name: portainer
+  admin_user: "admin"
+  directory: "{{ docker_dir }}/portainer"
+  admin_password: "318zfCOcqwDSjt6R458wybI"
+
+watchtower:
+  name: watchtower
+  directory: "{{ docker_dir }}/watchtower"
+  http_token: "sesamoeffnedich"
+  telegram_bot_token: ""
+
+autoheal:
+  name: autoheal
+  directory: "{{ docker_dir }}/autoheal"
+  telegram_bot:
+    enabled: false
+    token: ""
+    channel_id: ""

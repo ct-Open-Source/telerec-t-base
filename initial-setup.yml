@@ -1,9 +1,5 @@
-- hosts: all
-  become: 'yes'
+- hosts: server
+  become: true
   roles:
     - system
-    - install_docker
-    - traefik
-    - portainer
-    - watchtower
-  tasks:
+    - geerlingguy.docker

@@ -1,6 +1,19 @@
-[submodule "group_vars/secrets"]
-	path = group_vars/secrets
-	url = git@github.com:pinae/telerec-t-secrets.git
-[submodule "roles/bonsai-sim"]
-	path = roles/bonsai-sim
-	url = git@github.com:ct-Open-Source/telerec-t-bonsai-sim.git
+[submodule "roles/system"]
+	path = roles/system
+	url = git@github.com:ct-Open-Source/telerec-t-debian.git
+[submodule "roles/traefik"]
+	path = roles/traefik
+	url = git@github.com:ct-Open-Source/telerec-t-traefik.git
+[submodule "roles/portainer"]
+	path = roles/portainer
+	url = git@github.com:ct-Open-Source/telerect-t-portainer.git
+[submodule "roles/watchtower"]
+	path = roles/watchtower
+	url = git@github.com:ct-Open-Source/telerec-t-watchtower.git
+[submodule "roles/compose_hull"]
+	path = roles/compose_hull
+	url = git@github.com:ct-Open-Source/telerec-t-compose-hull.git
+	branch = main
+[submodule "roles/autoheal"]
+	path = roles/autoheal
+	url = git@github.com:ct-Open-Source/telerec-t-autoheal.git
