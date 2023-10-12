@@ -1,3 +1,0 @@
-portainer:
-  image: "portainer/portainer-ce:latest"
-  admin_user: "admin"
