@@ -10,12 +10,12 @@ portainer:
   name: portainer
   admin_user: "admin"
   directory: "{{ docker_dir }}/portainer"
-  admin_password: "318zfCOcqwDSjt6R458wybI"
+  admin_password: "6sjGtgBr1EkX1EARfkxovKh5p"
 
 watchtower:
   name: watchtower
   directory: "{{ docker_dir }}/watchtower"
-  http_token: "sesamoeffnedich"
+  http_token: "6sjGtgBr1EkX1EARfkxovKh5p"
   telegram_bot_token: ""
 
 autoheal:
