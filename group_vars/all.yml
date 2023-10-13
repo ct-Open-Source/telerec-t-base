@@ -5,6 +5,7 @@ traefik:
   name: traefik
   directory: "{{ docker_dir }}/traefik"
   domain: "traefik.pinyto.de"
+  http_basic_users: "admin:$$apr1$$C7q4MwxW$$3DbS4TuKkgnkPvS8H3vZG1"  # User: admin, Password: nQ9i6yK9ORnMySE2AG26eJNSq
 
 portainer:
   name: portainer

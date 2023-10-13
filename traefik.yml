@@ -1,0 +1,6 @@
+- hosts: server
+  become: true
+  roles:
+    - role: traefik
+      vars:
+        service_cfg: "{{ traefik }}"

@@ -1,0 +1,11 @@
+roles:
+  - name: geerlingguy.docker
+
+collections:
+  - name: ansible.posix
+    source: https://galaxy.ansible.com
+  - name: community.general
+    source: https://galaxy.ansible.com
+  - name: community.docker
+    version: ">=3.4.9"
+    source: https://galaxy.ansible.com

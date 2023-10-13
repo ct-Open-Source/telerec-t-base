@@ -1,7 +1,8 @@
-ansible_user: pina
+ansible_user: pi
 admin:
   name: pi
   key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  email: "mariamuster@example.com"
 locale: de_DE.UTF-8
 timezone: Europe/Berlin
 docker_dir: "/docker"

@@ -1,0 +1,6 @@
+- hosts: server
+  become: true
+  roles:
+    - role: autoheal
+      vars:
+        service_cfg: "{{ autoheal }}"

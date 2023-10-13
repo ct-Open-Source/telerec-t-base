@@ -1,0 +1,6 @@
+- hosts: server
+  become: true
+  roles:
+    - role: portainer
+      vars:
+        service_cfg: "{{ portainer }}"

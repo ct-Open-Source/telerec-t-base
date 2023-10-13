@@ -1,5 +1,7 @@
 - hosts: server
   become: true
+  vars:
+    pip_package: python3-pip
   roles:
     - system
     - geerlingguy.docker
