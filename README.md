@@ -16,7 +16,7 @@ sudo apt install sshpass
 Then [install Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html). 
 We recommend using `pipenv` with the Pipfile in the repository:
 ```shell
-cd Pluto
+cd telerec-t-base
 pipenv install
 ```
 
