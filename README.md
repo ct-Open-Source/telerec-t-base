@@ -43,5 +43,5 @@ pipenv run ansible-playbook initial-setup.yml -i hosts --ask-pass --ask-become-p
 ```
 
 ```shell script
-pipenv run ansible-playbook server-setup.yml -i hosts
+pipenv run ansible-playbook system-setup.yml -i hosts
 ```
